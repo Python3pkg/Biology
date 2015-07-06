@@ -112,14 +112,11 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
-    "Intended Audience :: Users",
-    "License :: MIT",
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: POSIX",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python",
     "Topic :: Utilities",
-    "Topic :: Downloader",
 ]
 
 baseURL = "https://github.com/TinyNecessaryTools/Biology"
