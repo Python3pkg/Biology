@@ -109,7 +109,7 @@ more examples when typing ``pygenomes -h`` on the command-line)::
 
 
 classifiers = [
-    "Development Status :: 1",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Users",
