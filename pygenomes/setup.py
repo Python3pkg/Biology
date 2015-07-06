@@ -56,6 +56,8 @@ interactive mode, which will allow you to choose specific genome assembly.To
 do this, you only need to assign a True value for assembly, then according to 
 the available list prompted to you simply input the interested assembly.
 
+The tool only tested on Python2.7, may not work on Python3.
+
 
 Features
 --------
@@ -79,13 +81,13 @@ a bit in the future)::
     >>> from pygenomes import genomes
     >>>
     # prints out available taxa in group of mammals
-    >>> genomes(gname=[group_name])                    # i.e. ['mammals']
+    >>> genomes(gname='mammals') 
     # download human reference genome (hg19) in .2bit format
-    >>> genomes(taxa=[taxa])                           # i.e. ['human']
+    >>> genomes(taxa='human')  
     # interactive mode, ask for inputing and downloading specific assembly
-    >>> genomes(taxa=[taxa], assembly=[assembly])      # i.e. ['cow'], ['1']
+    >>> genomes(taxa='cow', assembly='1') 
     # try to download chromosome data, per fa.gz file per chromosome
-    >>> genomes(taxa=[taxa], chrs=[format])            # i.e. ['cow'], ['1']
+    >>> genomes(taxa='cow', chrs='1') 
 
 In addition there is a script named ``pygenomes``, which can be used 
 more easily from the system command-line like this (you can see many 
@@ -134,9 +136,8 @@ setup(
     platforms = ["Posix", "Windows"],
     keywords = ["genome", "download", "ucsc", 'bioinformatic', 'biology'],
     url = baseURL,
-    download_url = baseURL + "/pygenomes/dist/pygenomes-%s.tar.gz" % __version__,
+    download_url = "https://pypi.python.org/packages/source/p/pygenomes/pygenomes-0.1.0.tar.gz",
     py_modules = ["pygenomes"],
-    # scripts = ["pygenomes"],
     entry_points = {
         "console_scripts" : ["pygenomes = pygenomes:main"]
     },
