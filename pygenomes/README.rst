@@ -8,7 +8,7 @@ pygenomes
 A simple and excellent tool for downloading genome data from UCSC ftp site.
 -------------------------------------------------------------------------------
 
-:Author:     FEI YUAN  <fyuan3@uh.edu>
+:Author:     FEI YUAN  <fyuan4@uh.edu>
 :Homepage:   https://github.com/TinyNecessaryTools/Biology.git
 :Version:    Version 0.1.0
 :Date:       2015-07-07
