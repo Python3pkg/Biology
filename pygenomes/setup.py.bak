@@ -24,17 +24,17 @@ if setupCommand in ("sdist", "build"):
     res = os.path.join(os.path.dirname(sys.executable), toolName)
     if os.path.exists(res):
         cmd = "%s '%s' '%s'" % (res, "README.txt", "README.html")
-        print("running command %s" % cmd)
+        print "running command %s" % cmd
         cmd = os.system(cmd)
     else:
         res = os.path.join('/usr/local/bin/', toolName)
         if os.path.exists(res):
             cmd = "%s '%s' '%s'" % (res, "README.txt", "README.html")
-            print("running command %s" % cmd)
+            print "running command %s" % cmd
             cmd = os.system(cmd)
         else:
-            print("Warning: No '%s' found. 'README.{txt|html}'" % toolName, end=' ')
-            print("might be out of synch.")
+            print "Warning: No '%s' found. 'README.{txt|html}'" % toolName,
+            print "might be out of synch."
 
 
 # description for Distutils to do its business

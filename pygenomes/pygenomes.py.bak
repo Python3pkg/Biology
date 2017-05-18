@@ -169,14 +169,14 @@ def ftp_connection(host='', taxa='', genomedir='', email='', timeout=60*60):
     try:
         ftp = ftplib.FTP(host)
     except socket.gaierror:
-        print(('Can not reach to {0}, please chech the site or your internet connection!'.format(host)))
+        print('Can not reach to {0}, please chech the site or your internet connection!'.format(host))
         return
 
     if email:
         try:
             ftp.login('anonymous', email)
         except ftplib.error_perm:
-            print('Can not login anonymously')
+            print 'Can not login anonymously'
             ftp.quit()
             return
     else:
@@ -186,7 +186,7 @@ def ftp_connection(host='', taxa='', genomedir='', email='', timeout=60*60):
         try:
             ftp.cwd(genomedir)
         except ftplib.error_perm:
-            print(('Wrong option\nYou may input a wrong taxa name: {0}\nOr UCSC ftp does not have genome for your taxa: {0}\n\nPlease consider the following ways:\n1) Please check your spell carefully\n2) Please check available genomes via "-g 1".\n'.format(taxa)))
+            print('Wrong option\nYou may input a wrong taxa name: {0}\nOr UCSC ftp does not have genome for your taxa: {0}\n\nPlease consider the following ways:\n1) Please check your spell carefully\n2) Please check available genomes via "-g 1".\n'.format(taxa))
             ftp.quit()
             return
     return ftp
@@ -204,22 +204,22 @@ def taxa_convert(taxa='', assembly=''):
     """
 
     if taxa:
-        common_name = list(TAXA_MAP.keys())
-        abbrevs = [v[0] for v in list(TAXA_MAP.values())]
-        sci_name = [v[1].replace('_', ' ') for v in list(TAXA_MAP.values())]
+        common_name = TAXA_MAP.keys()
+        abbrevs = [v[0] for v in TAXA_MAP.values()]
+        sci_name = [v[1].replace('_', ' ') for v in TAXA_MAP.values()]
 
         if assembly:
             if taxa in common_name:
                 return (TAXA_MAP[taxa][0], True)
             elif taxa.strip('0123456789') in abbrevs:
-                print(('You already specified the genome assembly with {0}, the assembly argument will be ignored!'.format(taxa)))
+                print('You already specified the genome assembly with {0}, the assembly argument will be ignored!'.format(taxa))
                 return (taxa, True)
             elif taxa in sci_name:
                 taxa = [v[0]
-                        for v in list(TAXA_MAP.values()) if taxa == v[1].replace('_', ' ')]
+                        for v in TAXA_MAP.values() if taxa == v[1].replace('_', ' ')]
                 return (taxa[0], True)
             else:
-                print(('Wrong taxa: {0}\n\nYou can consider the following ways:\n1) Please check you spell carefully!\n2) Please check available genomes via "-g 1".\n'.format(taxa)))
+                print('Wrong taxa: {0}\n\nYou can consider the following ways:\n1) Please check you spell carefully!\n2) Please check available genomes via "-g 1".\n'.format(taxa))
                 return ('', False)
         else:
             if taxa in common_name:
@@ -229,7 +229,7 @@ def taxa_convert(taxa='', assembly=''):
             elif taxa in sci_name:
                 return (taxa.replace(' ', '_'), False)
             else:
-                print(('Wrong taxa: {0}\n\nYou can consider the following ways:\n1) Please check you spell carefully!\n2) Please check available genomes via "-g 1".\n'.format(taxa)))
+                print('Wrong taxa: {0}\n\nYou can consider the following ways:\n1) Please check you spell carefully!\n2) Please check available genomes via "-g 1".\n'.format(taxa))
                 return ('', False)
     else:
         return ('', False)
@@ -257,36 +257,36 @@ def genomes_available(group=''):
     header = '|{0}|{1}|'.format(
         'Common Name'.center(20), 'Scientific Name'.center(36))
     if group == '1':
-        title = 'UCSC genomes ({0})'.format(len(list(TAXA_MAP.values())))
-        content = list(TAXA_MAP.keys())
+        title = 'UCSC genomes ({0})'.format(len(TAXA_MAP.values()))
+        content = TAXA_MAP.keys()
     else:
         group = [i for i in groups if group.title() in i]
         if len(group) == 1:
             group = group[0]
         else:
-            print(('Wrong option!\nGroup only accept the following names:\n{0}'.format(
-                '\n'.join(groups))))
-            group = input('Input q to quit or a group name to ccontinue: ')
+            print('Wrong option!\nGroup only accept the following names:\n{0}'.format(
+                '\n'.join(groups)))
+            group = raw_input('Input q to quit or a group name to ccontinue: ')
             if group == 'q':
                 return
             else:
                 while group not in groups:
-                    group = input('Wrong choice! Please input q to quit or a name to continue: ')
+                    group = raw_input('Wrong choice! Please input q to quit or a name to continue: ')
                     if group == 'q':
                         return
 
         title = '{0} ({1} taxa available)'.format(group, len(GROUP_MAP[group]))
         content = GROUP_MAP[group]
 
-    print(('{0}'.format(59*'-')))
-    print(('| {0} |'.format(title.center(55))))
-    print(('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+')))
+    print('{0}'.format(59*'-'))
+    print('| {0} |'.format(title.center(55)))
+    print('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+'))
     print(header)
-    print(('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+')))
+    print('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+'))
     for i in sorted(content):
-        print(('|{0}|{1}|'.format(
-            i.center(20), TAXA_MAP[i][1].replace('_', ' ').center(36))))
-        print(('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+')))
+        print('|{0}|{1}|'.format(
+            i.center(20), TAXA_MAP[i][1].replace('_', ' ').center(36)))
+        print('{0}{1}{0}{2}{0}'.format('+', 20*'-', 36*'-', '+'))
 
 
 def genomes_assembly(taxa='', assembly=''):
@@ -312,18 +312,18 @@ def genomes_assembly(taxa='', assembly=''):
 
             otus = [i for i in otus if i.startswith(taxa.strip('0123456789'))]
             if otus:
-                print(('Found {0} available genome assembly(s):\n{1}'.format(
-                    len(otus), 79*'=')))
-                print(('\n'.join(otus)))
-                print((79*'='))
-                taxa = input('Input q to quit or an assembly name to ccontinue: ')
+                print('Found {0} available genome assembly(s):\n{1}'.format(
+                    len(otus), 79*'='))
+                print('\n'.join(otus))
+                print(79*'=')
+                taxa = raw_input('Input q to quit or an assembly name to ccontinue: ')
                 if taxa == 'q':
                     print('Goodbye!')
                     return ('', '')
                 else:
                     genomedir = '/'.join(['goldenPath', taxa, 'bigZips'])
                     while taxa not in otus:
-                        taxa = input('Wrong choice! Please input q to quit or an assembly name to continue: ')
+                        taxa = raw_input('Wrong choice! Please input q to quit or an assembly name to continue: ')
                         if taxa == 'q':
                             print('Goodbye!')
                             return ('', '')
@@ -334,7 +334,7 @@ def genomes_assembly(taxa='', assembly=''):
     else:
         genomedir = '/'.join(['goldenPath/currentGenomes', taxa.replace(' ', '_'), 'bigZips'])
         taxa = [v[0]
-                for v in list(TAXA_MAP.values()) if taxa == v[1].replace(' ', '_')]
+                for v in TAXA_MAP.values() if taxa == v[1].replace(' ', '_')]
         if taxa:
             taxa = taxa[0]
 
@@ -413,7 +413,7 @@ def dirs(outdir):
 
     if not os.path.exists(outdir):
         outdir = os.getcwd()
-        print(('The outdir you assigned does not exist, files will be stored to {0}'.format(outdir)))
+        print('The outdir you assigned does not exist, files will be stored to {0}'.format(outdir))
     return outdir
 
 def cmds(method, taxa, files='', outdir=''):
@@ -444,8 +444,8 @@ def rsync_download(host, taxa, files='', outdir=''):
     cmd = cmds('rsync', taxa, files, outdir)
     if not cmd:
         return
-    list(map(subprocess.call, cmd))
-    print(('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir))))
+    map(subprocess.call, cmd)
+    print('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir)))
 
 
 def wget_download(host, taxa, files='', outdir=''):
@@ -453,8 +453,8 @@ def wget_download(host, taxa, files='', outdir=''):
     cmd = cmds('rsync', taxa, files, outdir)
     if not cmd:
         return
-    list(map(subprocess.call, cmds('wget', taxa, files, outdir)))
-    print(('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir))))
+    map(subprocess.call, cmds('wget', taxa, files, outdir))
+    print('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir)))
 
 
 def ftp_download(host, taxa, files='', outdir='', email=''):
@@ -483,7 +483,7 @@ def ftp_download(host, taxa, files='', outdir='', email=''):
 
     [ftp.retrbinary(cmd[i], CallBack(size[i], open(outfiles[i], 'wb'))) for i in range(len(files))]
     ftp.quit()
-    print(('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir))))
+    print('\nDownload successfully! File(s) was stored in {0}'.format(dirs(outdir)))
 
 
 def genomes(group='', taxa='', assembly='', chrs='',  formats='', outdir='', email=''):
@@ -522,7 +522,7 @@ def show_version():
      "Print version message and terminate"
 
      program = 'pygenomes'
-     print(('{0} {1}'.format(program, __version__)))
+     print('{0} {1}'.format(program, __version__))
      sys.exit()
 
 
@@ -532,10 +532,10 @@ def shwo_usage():
     program = 'pygenomes'
     copyrightYear = "2015"
     args = (program, __version__, __author__, __contact__, copyrightYear, __license__)
-    print(("\n{0} v.{1}, Copyleft by {2} ({3}), {4} ({5})".format(program, __version__, __author__, __contact__, copyrightYear, __license__)))
+    print("\n{0} v.{1}, Copyleft by {2} ({3}), {4} ({5})".format(program, __version__, __author__, __contact__, copyrightYear, __license__))
     print("\nDownload genome data from UCSC genome ftp site to local file system")
-    print(("\nUSAGE: {0} [-hvgtacfoe]".format(program)))
-    print(("""\
+    print("\nUSAGE: {0} [-hvgtacfoe]".format(program))
+    print("""\
 \nOPTIONS:
 
   -h --help         Prints this usage message and exits.
@@ -595,7 +595,7 @@ Download chromosome data in different formats (if available)
   {0} -t human -c 1       # common name, chromosome data, default file format
 
   {0} -t yeast -a 1 -c 2  # interactive mode, chromosome data, set file format 
-""".format(program)))
+""".format(program))
     sys.exit()
 
 
